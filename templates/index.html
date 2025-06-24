@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Face Match Finder</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔍 Face Match Finder</h1>
+
+      <div id="loader" class="loader-container" style="display: none;">
+        <div class="loader-spin"></div>
+        <p id="loader-message">Matching faces... 🧠</p>
+      </div>
+
+
+      <div class="form-box">
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="upload-section">
+            <label class="file-label">
+                📁 Upload an image:
+                <input type="file" name="photo">
+            </label>
+            <button type="submit" class="upload-btn">Upload & Match</button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <form method="GET" action="/webcam" class="webcam-section">
+            <button type="submit" class="webcam-btn">📷 Use Webcam</button>
+        </form>
+
+
+      {% if matches %}
+      <div class="match-heading">
+        <h3>🎯 Match Found!</h3>
+      </div>
+      <div class="match-grid">
+        {% for img in matches %}
+        <div class="result-img">
+          <img src="{{ img }}"  alt="Matched Image" />
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </body>
+
+  <script>
+  const loader = document.getElementById('loader');
+  const messages = [
+    "Analyzing faces like Sherlock 🔍",
+    "Running facial vibes through neural nets 🤖",
+    "Is that a doppelgänger I see? 👀",
+    "Searching through photo history 📂",
+    "Comparing cheekbones and jawlines 👃"
+  ];
+  
+  // Change message every few seconds
+  setInterval(() => {
+    const msg = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("loader-message").innerText = msg;
+  }, 2500);
+
+  // Show loader on form submit
+  document.querySelectorAll('form').forEach(form => {
+    form.addEventListener('submit', () => {
+      loader.style.display = 'flex';
+    });
+  });
+</script>
+
+</html>
