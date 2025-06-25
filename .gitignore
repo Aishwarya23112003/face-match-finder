@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+uploads/
+results/
+*.jpg
+*.png
+.env
+face_match_env/
